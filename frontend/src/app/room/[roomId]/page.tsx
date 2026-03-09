@@ -9,7 +9,7 @@ import { GameTable } from "../../../components/GameTable";
 export default function RoomPage() {
   const params = useParams<{ roomId: string }>();
   const router = useRouter();
-  const { isConnected } = useSocket();
+  const { socket, isConnected } = useSocket();
   const game = useGameState();
   const localPlayer = useLocalPlayer();
 
@@ -95,22 +95,24 @@ export default function RoomPage() {
                 <button
                   type="button"
                   onClick={() => {
-                    if (!game.roomId) return;
-                    const settings = {
-                      twoPlayerMode: game.players.length === 2,
-                      multiRound: false,
-                    };
-                    game.state &&
-                      window.dispatchEvent(
-                        new CustomEvent("tnah:start-game", {
-                          detail: { roomId: game.roomId, settings },
-                        }),
-                      );
-                  }}
-                  className="rounded-full bg-sky-500 px-4 py-2 text-xs font-semibold text-slate-950 shadow-md shadow-sky-500/30 hover:bg-sky-400"
-                >
-                  Start game
-                </button>
+                  if (!socket || !game.roomId) return;
+                  const settings = {
+                    twoPlayerMode: game.players.length === 2,
+                    multiRound: false,
+                    maxPenalty: 3,
+                  };
+                  socket.emit(
+                    "start_game",
+                    { roomId: game.roomId, settings },
+                  () => {
+                    // optional: you could show a toast on success
+                  },
+                );
+              }}
+              className="rounded-full bg-sky-500 px-4 py-2 text-xs font-semibold text-slate-950 shadow-md shadow-sky-500/30 hover:bg-sky-400"
+            >
+              Start game
+            </button>
               </div>
             </div>
           )}
