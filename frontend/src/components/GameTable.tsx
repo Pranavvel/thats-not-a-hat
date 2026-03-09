@@ -50,7 +50,7 @@ export function GameTable() {
   };
 
   const handleDeclareGift = () => {
-    if (!socket || !game.roomId || !game.state.pendingGift) return;
+    if (!socket || !game.roomId || !game.state || !game.state.pendingGift) return;
     // In this minimal version, we always tell the truth for the on-screen name.
     socket.emit("declare_gift", {
       roomId: game.roomId,
