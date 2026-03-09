@@ -1,11 +1,5 @@
 import { generateDeck } from './deck';
-import {
-  Card,
-  GameSettings,
-  GameState,
-  PendingGift,
-  PlayerState,
-} from '../types';
+import type { Card, GameSettings, GameState, PendingGift, PlayerState } from '../types';
 import {
   advanceToNextPlayer,
   assertPhase,
@@ -184,7 +178,7 @@ export class GameRoom {
       throw new Error('No card to give.');
     }
 
-    const givenRef = player.cardStack[player.cardStack.length - 1];
+    const givenRef = player.cardStack[player.cardStack.length - 1]!;
     const givenCard = this.getCardById(givenRef.cardId);
 
     const recipient = this.getRecipientForArrow(player.seatIndex, givenCard);
@@ -245,7 +239,7 @@ export class GameRoom {
     if (receiver.cardStack.length === 0) {
       throw new Error('Receiver has no card to give.');
     }
-    const oldestRef = receiver.cardStack[0];
+    const oldestRef = receiver.cardStack[0]!;
     const oldestCard = this.getCardById(oldestRef.cardId);
     receiver.cardStack = receiver.cardStack.slice(1);
 

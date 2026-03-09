@@ -1,4 +1,4 @@
-import { GamePhase, GameState } from '../types';
+import type { GamePhase, GameState } from '../types';
 
 export function assertPhase(state: GameState, expected: GamePhase): void {
   if (state.phase !== expected) {
