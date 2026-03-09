@@ -85,7 +85,7 @@ export default function RoomPage() {
             </ul>
           </section>
 
-          {localPlayer && localPlayer.id === game.state?.currentPlayerId && (
+          {localPlayer && localPlayer.seatIndex === 0 && (
             <div className="flex flex-col items-start gap-2 rounded-3xl border border-slate-800 bg-slate-900/60 p-4 text-xs text-slate-300 md:flex-row md:items-center md:justify-between">
               <p>
                 You are the host. Start when everyone has joined. Use 2-player
