@@ -91,20 +91,22 @@ export function GameStateProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!socket) return;
-
-    const handleRoomUpdate = (payload: RoomUpdatePayload) => {
-      setRoomId(payload.roomId);
-      setPlayers(payload.players);
-      setState(payload.state);
+  
+    const handleRoomUpdate = (payload: any) => {
+      const data = payload as RoomUpdatePayload;
+      setRoomId(data.roomId);
+      setPlayers(data.players);
+      setState(data.state);
     };
-
-    const handleGameState = (nextState: GameState) => {
-      setState(nextState);
+  
+    const handleGameState = (nextState: any) => {
+      const data = nextState as GameState;
+      setState(data);
     };
-
+  
     socket.on("room_update", handleRoomUpdate);
     socket.on("game_state", handleGameState);
-
+  
     return () => {
       socket.off("room_update", handleRoomUpdate);
       socket.off("game_state", handleGameState);
